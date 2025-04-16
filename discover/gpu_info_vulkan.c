@@ -3,24 +3,6 @@
 #include <string.h>
 
 int check_perfmon(vk_handle_t* rh) {
-#ifdef __linux__
-  cap_t caps;
-  const cap_value_t cap_list[1] = {CAP_PERFMON};
-
-  caps = (*rh->cap_get_proc)();
-  if (caps == NULL)
-    return -1;
-
-  if ((*rh->cap_set_flag)(caps, CAP_EFFECTIVE, 1, cap_list, CAP_SET) == -1)
-    return -1;
-
-  if ((*rh->cap_set_proc)(caps) == -1)
-    return -1;
-
-  if ((*rh->cap_free)(caps) == -1)
-    return -1;
-#endif
-
   return 0;
 }
 
