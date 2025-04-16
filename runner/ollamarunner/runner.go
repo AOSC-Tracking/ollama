@@ -115,6 +115,9 @@ func (s *Server) NewSequence(prompt string, images []llm.ImageData, params NewSe
 		params.numKeep = int32(len(inputs))
 	}
 
+	// TODO(jessegross): We should ensure that we always leave minBatch of context space to shift,
+	// otherwise we might truncate or split the batch against the model's wishes
+
 	// Ensure that at least 1 input can be discarded during shift
 	params.numKeep = min(params.numKeep, s.cache.numCtx-1)
 
